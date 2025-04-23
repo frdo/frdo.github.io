@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Silenzio delle Macchine - Sopravvissuti al Caos</title>
+    <style>
+        /* Reset base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #1a1a1a;
+            color: #b0b0b0;
+            line-height: 1.6;
+            background-image: url('https://www.transparenttextures.com/patterns/worn-dots.png');
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #4a4a4a;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #e0e0e0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        header p {
+            font-size: 1rem;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+
+        /* Contenitore principale */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        /* Area principale (articolo) */
+        .main-content {
+            flex: 3;
+            background: #222;
+            padding: 2rem;
+            border: 1px solid #333;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .article-header h2 {
+            font-size: 2rem;
+            color: #d0d0d0;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+        }
+
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            border: 1px solid #444;
+        }
+
+        /* Sezione commenti */
+        .comments-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+        }
+
+        .comments-section h3 {
+            font-size: 1.5rem;
+            color: #d0d0d0;
+            margin-bottom: 1rem;
+        }
+
+        .comment {
+            background: #1c1c1c;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #333;
+        }
+
+        .comment-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment p {
+            font-size: 1rem;
+            color: #b0b0b0;
+        }
+
+        .comment-form {
+            margin-top: 2rem;
+        }
+
+        .comment-form h4 {
+            font-size: 1.3rem;
+            color: #d0d0d0;
+            margin-bottom: 1rem;
+        }
+
+        .comment-form label {
+            display: block;
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            background: #1c1c1c;
+            border: 1px solid #444;
+            color: #b0b0b0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .comment-form button {
+            padding: 0.5rem 1rem;
+            background: #333;
+            border: 1px solid #555;
+            color: #d0d0d0;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .comment-form button:hover {
+            background: #444;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            flex: 1;
+            background: #1c1c1c;
+            padding: 2rem;
+            border: 1px solid #333;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar h3 {
+            font-size: 1.5rem;
+            color: #d0d0d0;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar ul li a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            color: #d0d0d0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            padding: 1rem;
+            text-align: center;
+            border-top: 3px solid #4a4a4a;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Stile per i link */
+        a {
+            color: #b0b0b0;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e0e0e0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .main-content, .sidebar {
+                flex: 1;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .article-header h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Sopravvissuti al Caos</h1>
+        <p>Un diario dal mondo in rovina</p>
+    </header>
+
+    <!-- Contenitore principale -->
+    <div class="container">
+        <!-- Area principale (articolo) -->
+        <main class="main-content">
+            <article>
+                <div class="article-header">
+                    <h2>Il Silenzio delle Macchine</h2>
+                    <div class="article-meta">Pubblicato il 23 Aprile 2025 | Autore: Sopravvissuto</div>
+                </div>
+                <div class="article-content">
+                    <p>Le strade sono silenziose oggi, rotte solo dal vento che trascina polvere e ricordi. Ho trovato un vecchio generatore in un magazzino abbandonato, ma il carburante è un sogno lontano. Ogni giorno è una lotta per trovare risorse, per mantenere accesa quella minuscola scintilla di speranza in un mondo che sembra aver dimenticato cosa significhi vivere.</p>
+                    <p>Le macchine, un tempo padroni del nostro destino, ora giacciono come scheletri arrugginiti sotto un cielo perennemente grigio. Non so se sia meglio così. La tecnologia ci ha traditi, ma senza di essa siamo poco più che ombre che vagano tra le rovine. Oggi ho visto un drone, o almeno ciò che ne rimaneva, incastrato tra i rami di un albero morto. Mi ha fatto pensare a quanto fossimo dipendenti da quei ronzii meccanici.</p>
+                    <img src="https://via.placeholder.com/600x300" alt="Rovine di una città post-apocalittica">
+                    <p>Continuo a scrivere queste note, anche se non so chi le leggerà. Forse è solo un modo per ricordarmi che esisto ancora. Domani proverò a raggiungere il vecchio impianto a nord. Dicono che lì ci sia ancora qualcosa da recuperare, ma le voci sono sempre pericolose da seguire. Il silenzio è il mio unico compagno ora, e a volte mi chiedo se non sia meglio così.</p>
+                </div>
+            </article>
+
+            <!-- Sezione commenti -->
+            <section class="comments-section">
+                <h3>Commenti</h3>
+                <div class="comment">
+                    <div class="comment-meta">Scritto da Viandante il 24 Aprile 2025</div>
+                    <p>Ho visto anch'io quel drone. Non fidarti delle voci sull'impianto, è una trappola. Resta al sicuro.</p>
+                </div>
+                <div class="comment">
+                    <div class="comment-meta">Scritto da Ombra il 23 Aprile 2025</div>
+                    <p>Il silenzio è pesante, vero? Continua a scrivere, almeno sappiamo che non sei solo.</p>
+                </div>
+
+                <!-- Form per nuovo commento -->
+                <div class="comment-form">
+                    <h4>Lascia un Commento</h4>
+                    <form>
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" name="name" required>
+                        <label for="comment">Commento</label>
+                        <textarea id="comment" name="comment" rows="5" required></textarea>
+                        <button type="submit">Invia</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Navigazione</h3>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Archivio</a></li>
+                <li><a href="#">Chi Sono</a></li>
+                <li><a href="#">Contatti</a></li>
+            </ul>
+            <h3>Risorse</h3>
+            <ul>
+                <li><a href="#">Guida alla Sopravvivenza</a></li>
+                <li><a href="#">Mappa delle Zone Sicure</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Sopravvissuti al Caos. Tutti i diritti riservati.</p>
+    </footer>
+</body>
+</html>
