@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infiltrazione nei sistemi di Arasaka Corp | Cyberpunk Terminal</title>
+    <style>
+        :root {
+            --neon-text: #0ff;
+            --neon-glow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+            --background-color: #0a0a0a;
+            --terminal-green: #0f5;
+            --danger-red: #f55;
+            --warning-yellow: #ff0;
+            --link-color: #f0f;
+            --code-bg: rgba(0, 30, 30, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--terminal-green);
+            font-family: "Courier New", monospace;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                transparent 0px,
+                rgba(0, 25, 0, 0.05) 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px;
+        }
+
+        header {
+            grid-column: 1 / -1;
+            border-bottom: 1px solid var(--neon-text);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .glitch-title {
+            font-family: "Courier New", monospace;
+            color: var(--neon-text);
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: var(--neon-glow);
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .glitch-title::before, .glitch-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .glitch-title::before {
+            color: var(--danger-red);
+            z-index: -2;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch 5s infinite linear alternate-reverse;
+            text-shadow: none;
+        }
+
+        .glitch-title::after {
+            color: var(--warning-yellow);
+            z-index: -1;
+            clip: rect(44px, 450px, 26px, 0);
+            animation: glitch 3s infinite linear alternate-reverse;
+            text-shadow: none;
+        }
+
+        @keyframes glitch {
+            0% {
+                clip: rect(31px, 9999px, 94px, 0);
+                transform: skew(0.85deg);
+            }
+            5% {
+                clip: rect(70px, 9999px, 78px, 0);
+                transform: skew(0.5deg);
+            }
+            10% {
+                clip: rect(29px, 9999px, 25px, 0);
+                transform: skew(0.65deg);
+            }
+            15% {
+                clip: rect(54px, 9999px, 29px, 0);
+                transform: skew(0.15deg);
+            }
+            20% {
+                clip: rect(66px, 9999px, 85px, 0);
+                transform: skew(0.25deg);
+            }
+            25% {
+                clip: rect(88px, 9999px, 39px, 0);
+                transform: skew(0.4deg);
+            }
+            30% {
+                clip: rect(15px, 9999px, 56px, 0);
+                transform: skew(0.8deg);
+            }
+            35% {
+                clip: rect(24px, 9999px, 92px, 0);
+                transform: skew(0.15deg);
+            }
+            40% {
+                clip: rect(53px, 9999px, 5px, 0);
+                transform: skew(0.7deg);
+            }
+            45% {
+                clip: rect(82px, 9999px, 33px, 0);
+                transform: skew(0.35deg);
+            }
+            50% {
+                clip: rect(31px, 9999px, 21px, 0);
+                transform: skew(0.5deg);
+            }
+            55% {
+                clip: rect(18px, 9999px, 69px, 0);
+                transform: skew(0.65deg);
+            }
+            60% {
+                clip: rect(44px, 9999px, 95px, 0);
+                transform: skew(0.3deg);
+            }
+            65% {
+                clip: rect(2px, 9999px, 58px, 0);
+                transform: skew(0.5deg);
+            }
+            70% {
+                clip: rect(33px, 9999px, 23px, 0);
+                transform: skew(0.15deg);
+            }
+            75% {
+                clip: rect(93px, 9999px, 37px, 0);
+                transform: skew(0.5deg);
+            }
+            80% {
+                clip: rect(26px, 9999px, 13px, 0);
+                transform: skew(0.7deg);
+            }
+            85% {
+                clip: rect(75px, 9999px, 55px, 0);
+                transform: skew(0.45deg);
+            }
+            90% {
+                clip: rect(67px, 9999px, 69px, 0);
+                transform: skew(0.35deg);
+            }
+            95% {
+                clip: rect(40px, 9999px, 15px, 0);
+                transform: skew(0.5deg);
+            }
+            100% {
+                clip: rect(5px, 9999px, 80px, 0);
+                transform: skew(0.2deg);
+            }
+        }
+
+        .terminal-prompt {
+            color: var(--terminal-green);
+            margin-bottom: 15px;
+        }
+
+        .terminal-prompt::before {
+            content: "> ";
+            color: var(--neon-text);
+        }
+
+        .sidebar {
+            border-right: 1px solid var(--neon-text);
+            padding-right: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+            padding: 5px 10px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav ul li a:hover {
+            color: var(--neon-text);
+            text-shadow: var(--neon-glow);
+        }
+
+        nav ul li a::before {
+            content: "[";
+            opacity: 0;
+            margin-right: 5px;
+            transition: opacity 0.3s;
+        }
+
+        nav ul li a::after {
+            content: "]";
+            opacity: 0;
+            margin-left: 5px;
+            transition: opacity 0.3s;
+        }
+
+        nav ul li a:hover::before,
+        nav ul li a:hover::after {
+            opacity: 1;
+        }
+
+        .main-content {
+            padding-left: 20px;
+        }
+
+        .article {
+            padding: 20px;
+            border: 1px solid var(--terminal-green);
+            background: rgba(0, 20, 0, 0.3);
+            position: relative;
+        }
+
+        .article::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid var(--neon-text);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .article-header {
+            margin-bottom: 25px;
+            border-bottom: 1px dashed var(--terminal-green);
+            padding-bottom: 15px;
+        }
+
+        .article-title {
+            font-size: 2rem;
+            color: var(--neon-text);
+            text-shadow: 0 0 5px var(--neon-text);
+            margin-bottom: 10px;
+        }
+
+        .article-meta {
+            font-size: 0.9rem;
+            color: var(--warning-yellow);
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .article-content {
+            margin-bottom: 30px;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+        }
+
+        .article-content h3 {
+            color: var(--neon-text);
+            margin: 30px 0 15px;
+            font-size: 1.3rem;
+        }
+
+        .article-content a {
+            color: var(--link-color);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--link-color);
+            transition: color 0.3s, border-color 0.3s, text-shadow 0.3s;
+        }
+
+        .article-content a:hover {
+            color: var(--neon-text);
+            border-color: var(--neon-text);
+            text-shadow: var(--neon-glow);
+        }
+
+        .article-content ul, .article-content ol {
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+        }
+
+        .article-content li::marker {
+            color: var(--neon-text);
+        }
+
+        .article-tags {
+            margin: 30px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--neon-text);
+            padding: 3px 8px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+            border: 1px solid var(--neon-text);
+        }
+
+        .tag:hover {
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--terminal-green);
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "CODE_SEGMENT";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--background-color);
+            padding: 0 5px;
+            color: var(--neon-text);
+            font-size: 0.8rem;
+        }
+
+        .image-container {
+            margin: 30px 0;
+            position: relative;
+            border: 1px solid var(--terminal-green);
+            padding: 10px;
+        }
+
+        .image-container::before {
+            content: "[IMAGE_DATA]";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--background-color);
+            padding: 0 5px;
+            color: var(--neon-text);
+            font-size: 0.8rem;
+        }
+
+        .comments-section {
+            margin-top: 40px;
+            border-top: 1px solid var(--neon-text);
+            padding-top: 20px;
+        }
+
+        .comment {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px dotted var(--terminal-green);
+            background: rgba(0, 10, 0, 0.3);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .comment-author {
+            color: var(--neon-text);
+        }
+
+        .comment-date {
+            color: var(--warning-yellow);
+            font-size: 0.8rem;
+        }
+
+        .comment-content {
+            font-size: 0.95rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .share-button {
+            padding: 5px 10px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid var(--neon-text);
+            color: var(--neon-text);
+            font-family: "Courier New", monospace;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .share-button:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 10px var(--neon-text);
+        }
+
+        .related-articles {
+            margin-top: 40px;
+            border-top: 1px solid var(--neon-text);
+            padding-top: 20px;
+        }
+
+        .related-article {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px dotted var(--terminal-green);
+            transition: all 0.3s;
+        }
+
+        .related-article:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: var(--neon-text);
+        }
+
+        .related-article h4 {
+            color: var(--neon-text);
+            margin-bottom: 5px;
+        }
+
+        .related-article-meta {
+            font-size: 0.8rem;
+            color: var(--warning-yellow);
+        }
+
+        footer {
+            grid-column: 1 / -1;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--neon-text);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .blink-cursor {
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .typing-animation {
+            overflow: hidden;
+            border-right: 2px solid var(--neon-text);
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--neon-text) }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--neon-text);
+            box-shadow: 0 0 10px var(--neon-text);
+            z-index: 1001;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 10, 0, 0.7);
+            color: var(--neon-text);
+            border: 1px solid var(--neon-text);
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+            display: none;
+            z-index: 1001;
+            transition: all 0.3s;
+        }
+
+        .back-to-top:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 10px var(--neon-text);
+        }
+
+        .info-box {
+            background: rgba(255, 255, 0, 0.1);
+            border: 1px solid var(--warning-yellow);
+            padding: 15px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .info-box::before {
+            content: "INFOBOX";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--background-color);
+            padding: 0 5px;
+            color: var(--warning-yellow);
+            font-size: 0.8rem;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid var(--danger-red);
+            padding: 15px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .warning-box::before {
+            content: "WARNING";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--background-color);
+            padding: 0 5px;
+            color: var(--danger-red);
+            font-size: 0.8rem;
+        }
+
+        /* Scanner effect */
+        .scanner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--neon-text);
+            box-shadow: 0 0 10px var(--neon-text), 0 0 20px var(--neon-text);
+            animation: scanning 4s linear infinite;
+            opacity: 0.5;
+            z-index: 2;
+        }
+
+        @keyframes scanning {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--neon-text);
+                padding-right: 0;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .main-content {
+                padding-left: 0;
+            }
+        }
+
+        /* Author box */
+        .author-box {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid var(--terminal-green);
+            background: rgba(0, 20, 0, 0.3);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border: 2px solid var(--neon-text);
+            background: var(--code-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-text);
+            font-size: 2rem;
+            overflow: hidden;
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-name {
+            color: var(--neon-text);
+            margin-bottom: 5px;
+        }
+
+        .author-bio {
+            font-size: 0.9rem;
+        }
+
+        /* Table of contents */
+        .toc {
+            margin: 30px 0;
+            border: 1px solid var(--terminal-green);
+            padding: 15px;
+            background: rgba(0, 20, 0, 0.3);
+            position: relative;
+        }
+
+        .toc::before {
+            content: "INDICE";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--background-color);
+            padding: 0 5px;
+            color: var(--neon-text);
+            font-size: 0.8rem;
+        }
+
+        .toc ol {
+            margin-left: 20px;
+        }
+
+        .toc li {
+            margin-bottom: 5px;
+        }
+
+        .toc a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .toc a:hover {
+            color: var(--neon-text);
+            text-shadow: 0 0 5px var(--neon-text);
+        }
+    </style>
+</head>
+<body class="scanner">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="container">
+        <header>
+            <h1 class="glitch-title" data-text="Cyberpunk Terminal">Cyberpunk Terminal</h1>
+            <p class="terminal-prompt typing-animation">Caricamento articolo... Autorizzazione concessa. Livello di sicurezza: MEDIO.</p>
+        </header>
+
+        <aside class="sidebar">
+            <div class="terminal-prompt">Menu di navigazione:</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Articoli</a></li>
+                    <li><a href="#">Progetti</a></li>
+                    <li><a href="#">Netrunning</a></li>
+                    <li><a href="#">Cyberspazio</a></li>
+                    <li><a href="#">Contatti</a></li>
+                </ul>
+            </nav>
+            
+            <div class="terminal-prompt" style="margin-top: 30px;">Indice articolo:</div>
+            <div class="toc">
+                <ol>
+                    <li><a href="#intro">Introduzione</a></li>
+                    <li><a href="#scoperta">La scoperta della vulnerabilità</a></li>
+                    <li><a href="#analisi">Analisi tecnica</a></li>
+                    <li><a href="#exploit">Dettagli dell'exploit</a></li>
+                    <li><a href="#implicazioni">Implicazioni e rischi</a></li>
+                    <li><a href="#conclusioni">Conclusioni</a></li>
+                </ol>
+            </div>
+            
+            <div class="terminal-prompt" style="margin-top: 30px;">Tags correlati:</div>
+            <div class="article-tags">
+                <span class="tag">#arasaka</span>
+                <span class="tag">#hack</span>
+                <span class="tag">#quantumcrypt</span>
+                <span class="tag">#netrunning</span>
+                <span class="tag">#cybersecurity</span>
+                <span class="tag">#exploit</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <article class="article">
+                <header class="article-header">
+                    <h2 class="article-title">Infiltrazione nei sistemi di Arasaka Corp</h2>
+                    <div class="article-meta">
+                        <span>Pubblicato: 23.04.2025</span>
+                        <span>Autore: Netrunner_X</span>
+                        <span>Tempo di lettura: 7 min</span>
+                    </div>
+                </header>
+
+                <div class="author-box">
+                    <div class="author-avatar">NX</div>
+                    <div class="author-info">
+                        <h3 class="author-name">Netrunner_X</h3>
+                        <p class="author-bio">Specialista in sicurezza informatica e netrunner indipendente. Esperto di criptografia quantistica e sistemi di protezione delle megacorporazioni. Attivo nella community underground di Night City.</p>
+                    </div>
+                </div>
+
+                <div class="article-content">
+                    <h3 id="intro">Introduzione</h3>
+                    <p>La megacorporazione Arasaka ha recentemente implementato un nuovo sistema di sicurezza quantistico che, secondo loro, è "impenetrabile". Ma nessun sistema è davvero sicuro al 100%. Dopo tre mesi di analisi e test continui, ho scoperto una vulnerabilità nel loro protocollo di autenticazione che permette l'intercettazione dei dati in transito.</p>
+                    
+                    <p>Questo articolo documenta il processo di scoperta, l'analisi tecnica dell'exploit e le implicazioni per la sicurezza del cyberspazio corporativo. <span class="blink-cursor">_</span></p>
+                    
+                    <div class="warning-box">
+                        <p>ATTENZIONE: Le informazioni contenute in questo articolo sono fornite esclusivamente a scopo educativo. L'utilizzo improprio di queste tecniche può comportare pesanti sanzioni legali. L'autore non si assume alcuna responsabilità per eventuali danni derivanti dall'applicazione di queste informazioni.</p>
+                    </div>
+
+                    <div class="image-container">
+                        <img src="/api/placeholder/800/400" alt="Diagramma della rete Arasaka" />
+                        <p style="margin-top: 10px; font-size: 0.9rem; color: var(--warning-yellow);">Fig. 1: Mappa della rete quantistica di Arasaka (semplificata)</p>
+                    </div>
+
+                    <h3 id="scoperta">La scoperta della vulnerabilità</h3>
+                    <p>Tutto è iniziato quando ho intercettato pacchetti di dati anomali durante un'analisi di routine della rete perimetrale di Arasaka. I pacchetti mostravano tracce di entanglement quantistico, ma con pattern di decadimento inusuali che suggerivano un'implementazione affrettata.</p>
+                    
+                    <p>Dopo settimane di analisi, ho capito che Arasaka stava utilizzando un algoritmo proprietario basato su QKD (Quantum Key Distribution) con alcune modifiche per accelerare il processo di handshake. Ed è proprio qui che ho trovato il punto debole.</p>
+                    
+                    <div class="info-box">
+                        <p>Il QKD (Quantum Key Distribution) è un metodo per generare e distribuire chiavi crittografiche sfruttando i principi della meccanica quantistica. Teoricamente dovrebbe essere inviolabile, in quanto qualsiasi tentativo di intercettazione modificherebbe lo stato quantistico delle particelle, rivelando immediatamente l'intrusione.</p>
+                    </div>
+
+                    <h3 id="analisi">Analisi tecnica</h3>
+                    <p>Il bug deriva da un'implementazione errata dell'algoritmo di handshake quantistico. Arasaka utilizza un generatore di numeri casuali quantistico (QRNG) per produrre le chiavi di sessione, ma il generatore viene inizializzato con un seed parzialmente prevedibile basato sul timestamp di sistema.</p>
+                    
+                    <p>Analizzando i pattern sui timestamp e confrontandoli con i dati intercettati, ho notato una correlazione statistica che non dovrebbe esistere in un vero sistema quantistico.</p>
+                    
+                    <div class="code-block">
+<pre>// Pseudocodice dell'algoritmo di inizializzazione Arasaka
+function initializeQRNG(timestamp) {
+    // Problematico: usa solo 8 bit di entropia dal timestamp
+    let seed = timestamp & 0xFF;
+    // Inizializza stato quantico con entropia insufficiente
+    let qState = new QuantumState(seed);
+    // Genera chiave di sessione
+    return qState.generateSessionKey();
+}</pre>
+                    </div>
+
+                    <p>Il codice sopra mostra come l'algoritmo utilizzi solo 8 bit di entropia dal timestamp di sistema, rendendo prevedibile una parte fondamentale del processo di generazione della chiave.</p>
+
+                    <h3 id="exploit">Dettagli dell'exploit</h3>
+                    <p>Per sfruttare questa vulnerabilità, ho sviluppato un tool personalizzato che:</p>
+                    <ol>
+                        <li>Intercetta il traffico di rete durante la fase di handshake</li>
+                        <li>Identifica i pattern temporali delle richieste di autenticazione</li>
+                        <li>Predice i possibili valori seed basati sul timestamp</li>
+                        <li>Tenta la decifrazione con chiavi candidate generate dai seed previsti</li>
+                    </ol>
+                    
+                    <p>Con questo approccio, sono stato in grado di decifrare circa il 30% delle comunicazioni intercettate senza lasciare tracce rilevabili.</p>
+
+                    <div class="image-container">
+                        <img src="/api/placeholder/800/500" alt="Screenshot del tool di exploit" />
+                        <p style="margin-top: 10px; font-size: 0.9rem; color: var(--warning-yellow);">Fig. 2: Tool di analisi delle vulnerabilità quantistiche in azione</p>
+                    </div>
+
+                    <h3 id="implicazioni">Implicazioni e rischi</h3>
+                    <p>Questa vulnerabilità ha conseguenze enormi per la sicurezza corporativa di Arasaka e potenzialmente per altre megacorporazioni che utilizzano tecnologie simili:</p>
+                    
+                    <ul>
+                        <li>Possibile intercettazione di dati sensibili senza che i sistemi di rilevamento ne siano consapevoli</li>
+                        <li>Falsificazione di credenziali di autenticazione per accessi non autorizzati</li>
+                        <li>Compromissione di transazioni finanziarie cifrate</li>
+                        <li>Potenziale accesso a progetti riservati e dati di intelligence corporativa</li>
