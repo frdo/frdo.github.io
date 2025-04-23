@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberpunk Terminal Blog</title>
+    <style>
+        :root {
+            --neon-text: #0ff;
+            --neon-glow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+            --background-color: #0a0a0a;
+            --terminal-green: #0f5;
+            --danger-red: #f55;
+            --warning-yellow: #ff0;
+            --link-color: #f0f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--terminal-green);
+            font-family: "Courier New", monospace;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                transparent 0px,
+                rgba(0, 25, 0, 0.05) 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px;
+        }
+
+        header {
+            grid-column: 1 / -1;
+            border-bottom: 1px solid var(--neon-text);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .glitch-title {
+            font-family: "Courier New", monospace;
+            color: var(--neon-text);
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: var(--neon-glow);
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .glitch-title::before, .glitch-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .glitch-title::before {
+            color: var(--danger-red);
+            z-index: -2;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch 5s infinite linear alternate-reverse;
+            text-shadow: none;
+        }
+
+        .glitch-title::after {
+            color: var(--warning-yellow);
+            z-index: -1;
+            clip: rect(44px, 450px, 26px, 0);
+            animation: glitch 3s infinite linear alternate-reverse;
+            text-shadow: none;
+        }
+
+        @keyframes glitch {
+            0% {
+                clip: rect(31px, 9999px, 94px, 0);
+                transform: skew(0.85deg);
+            }
+            5% {
+                clip: rect(70px, 9999px, 78px, 0);
+                transform: skew(0.5deg);
+            }
+            10% {
+                clip: rect(29px, 9999px, 25px, 0);
+                transform: skew(0.65deg);
+            }
+            15% {
+                clip: rect(54px, 9999px, 29px, 0);
+                transform: skew(0.15deg);
+            }
+            20% {
+                clip: rect(66px, 9999px, 85px, 0);
+                transform: skew(0.25deg);
+            }
+            25% {
+                clip: rect(88px, 9999px, 39px, 0);
+                transform: skew(0.4deg);
+            }
+            30% {
+                clip: rect(15px, 9999px, 56px, 0);
+                transform: skew(0.8deg);
+            }
+            35% {
+                clip: rect(24px, 9999px, 92px, 0);
+                transform: skew(0.15deg);
+            }
+            40% {
+                clip: rect(53px, 9999px, 5px, 0);
+                transform: skew(0.7deg);
+            }
+            45% {
+                clip: rect(82px, 9999px, 33px, 0);
+                transform: skew(0.35deg);
+            }
+            50% {
+                clip: rect(31px, 9999px, 21px, 0);
+                transform: skew(0.5deg);
+            }
+            55% {
+                clip: rect(18px, 9999px, 69px, 0);
+                transform: skew(0.65deg);
+            }
+            60% {
+                clip: rect(44px, 9999px, 95px, 0);
+                transform: skew(0.3deg);
+            }
+            65% {
+                clip: rect(2px, 9999px, 58px, 0);
+                transform: skew(0.5deg);
+            }
+            70% {
+                clip: rect(33px, 9999px, 23px, 0);
+                transform: skew(0.15deg);
+            }
+            75% {
+                clip: rect(93px, 9999px, 37px, 0);
+                transform: skew(0.5deg);
+            }
+            80% {
+                clip: rect(26px, 9999px, 13px, 0);
+                transform: skew(0.7deg);
+            }
+            85% {
+                clip: rect(75px, 9999px, 55px, 0);
+                transform: skew(0.45deg);
+            }
+            90% {
+                clip: rect(67px, 9999px, 69px, 0);
+                transform: skew(0.35deg);
+            }
+            95% {
+                clip: rect(40px, 9999px, 15px, 0);
+                transform: skew(0.5deg);
+            }
+            100% {
+                clip: rect(5px, 9999px, 80px, 0);
+                transform: skew(0.2deg);
+            }
+        }
+
+        .terminal-prompt {
+            color: var(--terminal-green);
+            margin-bottom: 15px;
+        }
+
+        .terminal-prompt::before {
+            content: "> ";
+            color: var(--neon-text);
+        }
+
+        .sidebar {
+            border-right: 1px solid var(--neon-text);
+            padding-right: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+            padding: 5px 10px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav ul li a:hover {
+            color: var(--neon-text);
+            text-shadow: var(--neon-glow);
+        }
+
+        nav ul li a::before {
+            content: "[";
+            opacity: 0;
+            margin-right: 5px;
+            transition: opacity 0.3s;
+        }
+
+        nav ul li a::after {
+            content: "]";
+            opacity: 0;
+            margin-left: 5px;
+            transition: opacity 0.3s;
+        }
+
+        nav ul li a:hover::before,
+        nav ul li a:hover::after {
+            opacity: 1;
+        }
+
+        .main-content {
+            padding-left: 20px;
+        }
+
+        .post {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid var(--terminal-green);
+            background: rgba(0, 20, 0, 0.3);
+            position: relative;
+        }
+
+        .post::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid var(--neon-text);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .post:hover::before {
+            opacity: 1;
+        }
+
+        .post-header {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--terminal-green);
+            padding-bottom: 10px;
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            color: var(--neon-text);
+        }
+
+        .post-meta {
+            font-size: 0.8rem;
+            color: var(--warning-yellow);
+            margin-top: 5px;
+        }
+
+        .post-content p {
+            margin-bottom: 15px;
+        }
+
+        .post-content a {
+            color: var(--link-color);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--link-color);
+            transition: color 0.3s, border-color 0.3s, text-shadow 0.3s;
+        }
+
+        .post-content a:hover {
+            color: var(--neon-text);
+            border-color: var(--neon-text);
+            text-shadow: var(--neon-glow);
+        }
+
+        .post-tags {
+            margin-top: 20px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--neon-text);
+            padding: 3px 8px;
+            margin-right: 5px;
+            font-size: 0.8rem;
+            border: 1px solid var(--neon-text);
+        }
+
+        .tag:hover {
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        footer {
+            grid-column: 1 / -1;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--neon-text);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .typing-animation {
+            overflow: hidden;
+            border-right: 2px solid var(--neon-text);
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--neon-text) }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--neon-text);
+                padding-right: 0;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .main-content {
+                padding-left: 0;
+            }
+        }
+
+        /* Codice per lo scanner effect */
+        .scanner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--neon-text);
+            box-shadow: 0 0 10px var(--neon-text), 0 0 20px var(--neon-text);
+            animation: scanning 4s linear infinite;
+            opacity: 0.5;
+            z-index: 2;
+        }
+
+        @keyframes scanning {
+            0% {
+                top: 0;
+            }
+            100% {
+                top: 100%;
+            }
+        }
+
+        /* Cursore lampeggiante */
+        .blink-cursor {
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Effetto data corruption */
+        .data-corruption {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-corruption::after {
+            content: "ERR0R_D4T4_C0RRUPT3D";
+            position: absolute;
+            color: var(--danger-red);
+            opacity: 0;
+            font-size: 0.8rem;
+            animation: corrupt 10s linear infinite;
+        }
+
+        @keyframes corrupt {
+            0% { opacity: 0; left: 0; top: 20%; }
+            2% { opacity: 0.8; }
+            3% { opacity: 0; }
+            10% { opacity: 0; left: 50%; top: 60%; }
+            12% { opacity: 0.8; }
+            13% { opacity: 0; }
+            40% { opacity: 0; left: 20%; top: 80%; }
+            42% { opacity: 0.8; }
+            43% { opacity: 0; }
+            80% { opacity: 0; left: 80%; top: 10%; }
+            82% { opacity: 0.8; }
+            83% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="scanner">
+    <div class="container">
+        <header>
+            <h1 class="glitch-title" data-text="Cyberpunk Terminal">Cyberpunk Terminal</h1>
+            <p class="terminal-prompt typing-animation">Benvenuto nel sistema, utente #3301. Inizializzazione completa...</p>
+        </header>
+
+        <aside class="sidebar">
+            <div class="terminal-prompt">Menu di navigazione:</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Articoli</a></li>
+                    <li><a href="#">Progetti</a></li>
+                    <li><a href="#">Netrunning</a></li>
+                    <li><a href="#">Cyberspazio</a></li>
+                    <li><a href="#">Contatti</a></li>
+                </ul>
+            </nav>
+            
+            <div class="terminal-prompt" style="margin-top: 30px;">Tags popolari:</div>
+            <div class="post-tags">
+                <span class="tag">#cyberpunk</span>
+                <span class="tag">#hacktivist</span>
+                <span class="tag">#netrun</span>
+                <span class="tag">#cyberware</span>
+                <span class="tag">#tech</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <article class="post data-corruption">
+                <header class="post-header">
+                    <h2 class="post-title">Infiltrazione nei sistemi di Arasaka Corp</h2>
+                    <div class="post-meta">Pubblicato: 23.04.2025 | Autore: Netrunner_X</div>
+                </header>
+                <div class="post-content">
+                    <p>La megacorporazione Arasaka ha recentemente implementato un nuovo sistema di sicurezza quantistico che, secondo loro, è impenetrabile. Ma nessun sistema è davvero sicuro al 100%...</p>
+                    <p>Ho scoperto una vulnerabilità nel loro protocollo di autenticazione che permette l'intercettazione dei dati in transito. Il bug deriva da un'implementazione errata dell'algoritmo di handshake quantistico.</p>
+                    <p><span class="blink-cursor">_</span> Continua a leggere per scoprire come ho aggirato i loro sistemi...</p>
+                </div>
+                <div class="post-tags">
+                    <span class="tag">#arasaka</span>
+                    <span class="tag">#hack</span>
+                    <span class="tag">#quantumcrypt</span>
+                    <span class="tag">#netrunning</span>
+                </div>
+            </article>
+
+            <article class="post">
+                <header class="post-header">
+                    <h2 class="post-title">Cyberware: Rischi e Benefici dell'Augmentation</h2>
+                    <div class="post-meta">Pubblicato: 19.04.2025 | Autore: ChromeDoc</div>
+                </header>
+                <div class="post-content">
+                    <p>L'installazione di cyberware offre potenziamenti incredibili alle capacità umane, ma a quale prezzo? L'ultima generazione di impianti neurali promette una capacità di elaborazione aumentata del 300%.</p>
+                    <p>Tuttavia, i nuovi casi di cyberpsicosi sono in aumento del 27%. Ho analizzato i dati degli ultimi impianti Militech confrontandoli con quelli di Kiroshi Electronics.</p>
+                    <p>La compatibilità tra diversi impianti rimane il problema principale per chi cerca di potenziare multipli sistemi corporei...</p>
+                </div>
+                <div class="post-tags">
+                    <span class="tag">#cyberware</span>
+                    <span class="tag">#augmentation</span>
+                    <span class="tag">#ripperdoc</span>
+                    <span class="tag">#militech</span>
+                </div>
+            </article>
+
+            <article class="post">
+                <header class="post-header">
+                    <h2 class="post-title">Tutorial: Creazione di un Deck ICE-breaker Personalizzato</h2>
+                    <div class="post-meta">Pubblicato: 15.04.2025 | Autore: CyberSamurai</div>
+                </header>
+                <div class="post-content">
+                    <p>In questo tutorial ti mostrerò come costruire un deck ICE-breaker personalizzato utilizzando componenti facilmente reperibili nel mercato nero di Night City.</p>
+                    <p>Il vantaggio principale di un deck personalizzato è la possibilità di bypassare i sistemi di riconoscimento standard utilizzati dalle corporazioni.</p>
+                    <p>Inizieremo con l'assemblaggio dell'hardware e poi passeremo alla programmazione del firmware e all'installazione dei protocolli di penetrazione...</p>
+                </div>
+                <div class="post-tags">
+                    <span class="tag">#tutorial</span>
+                    <span class="tag">#icebreaker</span>
+                    <span class="tag">#cyberdeck</span>
+                    <span class="tag">#nightcity</span>
+                </div>
+            </article>
+        </main>
+
+        <footer>
+            <p>© 2025 Cyberpunk Terminal Blog | Accesso garantito solo a utenti autorizzati</p>
+            <p class="terminal-prompt">Connessione sicura: <span style="color: var(--warning-yellow);">PARZIALE</span> | Crittografia: <span style="color: var(--terminal-green);">ATTIVA</span> | Tracciamento: <span style="color: var(--danger-red);">POSSIBILE</span></p>
+        </footer>
+    </div>
+</body>
+</html>
