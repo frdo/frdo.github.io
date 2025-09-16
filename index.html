@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Ferdinando Filangieri</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <style>
+  	:root {
+  		--background-color: #1B3A4B;
+  		--text-color: #EAE0D5;
+  		--text-hover-color: #B3EFB2;
+  		--text-focus-color: #B3EFB2;
+  	}
+    body {
+      margin: 0;
+      font-family: 'Consolas', monospace;
+      background: var(--background-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+	  h1, h2, h3, nav ul li a {
+	    font-family: 'Montserrat', sans-serif; /* Titoli e menu */
+	  }
+
+    /* Barra menu */
+    nav {
+      padding: 1rem;
+    }
+    nav ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      list-style: none;
+    }
+    nav ul li {
+      margin: 0 1rem;
+    }
+    nav ul li a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: var(--text-hover-color);
+    }
+    nav ul li a:focus,
+    nav ul li a:active {
+	    color: var(--text-focus-color);
+    }
+
+	  /* Logo */
+    .logo img {
+      height: 60px; /* regola la dimensione del logo */
+      vertical-align: middle;
+    }
+
+    /* Contenuto centrato */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: padding: clamp(1rem, 5vw, 4rem);;
+      padding-right: padding: clamp(1rem, 5vw, 4rem);;
+    }
+    .content {
+      max-width: 800px;
+      background: var(--background-color);
+      padding: 2rem;
+      /*box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 10px;*/
+    }
+
+    /* Footer */
+    footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      color: var(--text-color);
+      border-top: 1px solid #ddd;
+    }
+    footer .copyright {
+      font-size: 0.6rem;
+    }
+    footer .social a {
+      color: var(--text-color);
+      margin: 0 0.3rem;
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+    footer .social a:hover {
+      color: var(--text-focus-color);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Menu -->
+  
+  <nav>
+    <ul>
+      <li class="logo">
+        <a href="#">
+          <img src="logo-white.svg" alt="Logo">
+        </a>
+      </li>
+      <!-- <li><a href="#">Writing</a></li> -->
+    </ul>
+  </nav>
+  
+
+  <!-- Contenuto -->
+  <main>
+    <div class="content">
+      <h1>Ferdinando Filangieri</h1>
+      <p>
+        Appassionato di sviluppo software a più livelli.
+      </p>
+      <p>
+        Ho lavorato principalmente nella consulenza informatica. Nel tempo che resta mi dedico a piccoli progetti personali dove posso dare sfogo alla necessità di imparare ed utilizzare tecnologie che non uso quotidianamente nella mia vita da consulente.
+      </p>
+      <p>
+        - Ma tu cosa fai?<br/>
+        - Tutto!<br/>
+        - Allora non fai un ca**o!<br/>
+        - Eh!<br/>
+        [cit.]
+      </p>
+      <p>
+        Qui scriverò, forse, del più e del meno che mi passa per la testa.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <span class="copyright">© 2025 - Ferdinando Filangieri</span>
+    <div class="social">
+      <a href="https://github.com/frdo" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://x.com/flnfdr" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.instagram.com/filannando/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/ferdinando-filangieri-8a9bb591/" target="_blank"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </footer>
+
+</body>
+</html>
